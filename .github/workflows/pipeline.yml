@@ -38,7 +38,9 @@ jobs:
         name: pal-tracker
     - name: Deploy to cf
       run: |
-        cf login -a "$CF_API_URL" -o "$CF_ORG" -s "$CF_SPACE" -u "$CF_USERNAME" -p "$CF_PASSWORD"
+        cf api "$CF_API_URL"
+        cf auth
+        cf target -o "$CF_ORG" -s "$CF_SPACE"
         cf push -p ./pal-tracker/pal-tracker.jar
       env:
         CF_API_URL: ${{ secrets.CF_API_URL }}
